@@ -18,6 +18,7 @@ class QATable
 	
 	
 	cleanupTable: =>
+		# Utility function
 		rowIsEmpty = (row_selector) ->
 			isEmpty = true
 			for element, index in row_selector.children("td")
@@ -31,9 +32,23 @@ class QATable
 			.remove()
 		
 		# Make sure the last row is an empty row
-		tableRows = $("#{@tableID} tbody tr:last")
-		if tableRows.length == 0 or not rowIsEmpty(tableRows)
+		lastRow = $("#{@tableID} tbody tr:last")
+		if lastRow.length == 0 or not rowIsEmpty(lastRow)
 			@addEntry("","")
+		
+		# Highlight duplicate questions/answers
+		questions = []
+		answers = []
+		for row in $("#{@tableID} tbody tr:not(:last)")
+			children = $(row).children("td")
+			question = $(children[0]).text()
+			answer   = $(children[1]).text()
+			if question in questions or answer in answers
+				$(row).addClass("danger")
+			else
+				$(row).removeClass("danger")
+				questions.push(question)
+				answers.push(answer)
 	
 	
 	addEntry: (question, answer) =>
@@ -64,10 +79,11 @@ class QATable
 
 
 
+
 $ ->
 	qaTable = new QATable "#question-table"
 	qaTable.onChange((qaTable)->
-		console.log(qaTable.getQAPairs())
+		console.log("Changed!")
 	)
 	
 	return
