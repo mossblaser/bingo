@@ -8,6 +8,8 @@
 
 		<!-- Bootstrap -->
 		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/bingo.css" rel="stylesheet">
+		<link href="css/slider.css" rel="stylesheet">
 
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -17,22 +19,100 @@
 		<![endif]-->
 	</head>
 	<body>
-		<div class="container">
-			<h1>Bingo</h1>
+		<div class="container noprint" id="configuration">
+			<h1>Bingo Card Maker</h1>
 			
-			<h2>Questions</h2>
+			<p>Fill out the following form to generate your bingo cards.</p>
 			
-			<div>
-				<table id="question-table" class="table table-bordered"></table>
+			<form class="form-horizontal" role="form" id="params">
+				<div class="form-group">
+					<label for="width" class="col-sm-4 control-label">Title</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" id="title" value="Bingo">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="width" class="col-sm-4 control-label">Answers per sheet</label>
+					<div class="col-sm-2">
+						<input type="number" class="form-control" id="width"  value="3">
+					</div>
+					<div class="col-sm-1 control-label" style="text-align:center;">&times;</div>
+					<div class="col-sm-2">
+						<input type="number" class="form-control" id="height"  value="3">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="num-sheets" class="col-sm-4 control-label">Number of sheets</label>
+					<div class="col-sm-5">
+						<input type="number" class="form-control" id="num-sheets" value="8">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="qas" class="col-sm-4 control-label">Questions &amp; answers</label>
+					<div class="col-sm-8">
+						<textarea class="form-control" id="qas" rows="10">Q: How do you add a question?
+A: Just like this!
+
+Q: What about another one?
+A: Obvious, eh?</textarea>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="finish-speed" class="col-sm-4 control-label">Finish Speed</label>
+					<div class="col-sm-5">
+						<input type="text" id="finish-speed" class="span2"
+						       value="0.6"
+						       data-slider-min="0"
+						       data-slider-max="1"
+						       data-slider-step="0.01"
+						       data-slider-value="0.6"
+						       data-slider-orientation="horizontal"
+						       data-slider-selection="after"
+						       data-slider-tooltip="hide">
+						<span id="finish-speed-hint">Fast</span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<div class="col-sm-offset-4 col-sm-8">
+						<button type="submit" class="btn btn-primary">Generate Bingo Cards!</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		
+		<a id="bingo-cards-start"></a>
+		<div class="container" id="output">
+			<div class="alert alert-info noprint">
+				<p>Here are your bingo cards! Don't worry, this message and the form
+				above will not be printed. If you want to re-shuffle the questions or
+				change anything, just click the 'Generate Bingo Cards' button again.</p>
 			</div>
 			
-			<h2>Bingo Cards</h2>
+			<div class="bingo-questions">
+				<h1 class="bingo-title">Bingo</h1>
+				<table class="table">
+					<thead>
+						<tr><th>#</th><th>Question</th><th>Answer</th><th>Winners</th></tr>
+					</thead>
+					<tbody id="bingo-qas-table">
+					</tbody>
+				</table>
+			</div>
+			
+			<div id="bingo-cards">
+			</div>
 		</div>
 		
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 		<script src="js/jquery-1.11.0.min.js"></script>
 		<!-- Include all compiled plugins (below), or include individual files as needed -->
 		<script src="js/bootstrap.min.js"></script>
+		<script src="js/bootstrap-slider.js"></script>
 		<!-- Bingo creator code -->
 		<script src="js/bingo.js"></script>
 	</body>
