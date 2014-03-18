@@ -1,0 +1,6 @@
+.*
+*~
+*.swp
+*.map
+fonts/*
+js/bingo.js
